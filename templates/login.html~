@@ -1,6 +1,0 @@
-{% extends "lfs/customer/login.html" %}
-
-{% block wrapper %}
-<h1>hello world!</h1>
-<h3>How are you?!</h3>
-{% endblock %}
