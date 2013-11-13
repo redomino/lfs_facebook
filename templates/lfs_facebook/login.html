@@ -8,7 +8,7 @@
 
 <form action="{% url 'facebook_connect' %}?facebook_login=1" method="post" id="facebook_form">
     <a href="javascript:void(0);" style="font-size: 20px;" onclick="F.connect(this.parentNode);">Register, login or connect with facebook</a>
-    <input type="hidden" value="{{ request.path }}" name="next" />
+    <input type="hidden" value="{{ my_next }}" name="next" />
     <input type="hidden" value="{{ request.path }}" name="register_next" />
     <input type="hidden" value="{{ request.path }}" name="error_next" />
     {% csrf_token %}
