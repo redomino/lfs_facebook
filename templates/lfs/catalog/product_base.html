@@ -29,22 +29,22 @@
 
     {{ product.static_block.html|safe }}
 
-    {% product_navigation product %}
+    <!-- {% product_navigation product %} -->
 
-    <div class="overview">
-        {% current_category product %}
-        <a href="{{ current_category.get_absolute_url }}">
-           {% trans 'Back to overview' %}
-        </a>
+    <div id="product-form-wrapper">
+        <form id="product-form"
+              action="{% url lfs.catalog.views.product_form_dispatcher %}"
+              data="{% url lfs_select_variant_from_properties %}"
+              method="post">
+            {% csrf_token %}
+            {{ product_inline|safe }}
+        </form>
     </div>
-
-    <div id="product-inline">
-        {{ product_inline|safe }}
-    </div>
-
+<!--
     <a name="reviews"></a>
 
     {% reviews_for_instance product %}
+    -->
 
     {% tags_for_object product as tags %}
     {% if tags %}
@@ -71,4 +71,16 @@
     {% endif %}
 
     {% related_products_by_tags product %}
+
 {% endblock %}
+
+{% block local_js %}
+<script type="text/javascript">
+    $('#productTabs a').click(function (e) {
+              e.preventDefault()
+                $(this).tab('show')
+                })
+
+    </script>
+{% endblock %}
+
