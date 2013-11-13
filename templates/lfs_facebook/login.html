@@ -1,28 +1,12 @@
 {% extends "lfs/customer/login.html" %}
 {% load url from future %}
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/it_IT/all.js#xfbml=1&appId=398437633619154";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/it_IT/all.js#xfbml=1&appId=398437633619154";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
 {% block wrapper %}
 
 {% if not user.is_authenticated %}
 
 {% include 'django_facebook/_facebook_js.html' %}
 
-<form action="{% url 'facebook_connect' %}?facebook_login=1" method="post">
+<form action="{% url 'facebook_connect' %}?facebook_login=1" method="post" id="facebook_form">
     <a href="javascript:void(0);" style="font-size: 20px;" onclick="F.connect(this.parentNode);">Register, login or connect with facebook</a>
     <input type="hidden" value="{{ request.path }}" name="next" />
     <input type="hidden" value="{{ request.path }}" name="register_next" />
@@ -30,9 +14,7 @@
     {% csrf_token %}
 </form>
 </br>
-<div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-colorscheme="light" data-layout="standard" data-action="like" data-show-faces="true"></div>
 
-<div class="fb-comments" data-href="http://example.com/comments" data-numposts="5"></div>
 {% endif %}
 
 {% if user.is_authenticated %}
@@ -42,3 +24,16 @@
 {% endif %}
 
 {% endblock %}
+
+{% block local_js  %}
+
+<script>
+$(function() {
+	setTimeout(function(){
+        F.connect(document.getElementById("facebook_form"));
+    },3000);
+//$("#facebook_form").submit();
+});
+
+</script>
+{% endblock  %}
