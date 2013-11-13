@@ -6,5 +6,5 @@ except ImportError:
 from lfs_facebook import views
 
 urlpatterns = patterns('',
-    url(r'^facebook/login', views.login, name='login'),    
+    url(r'^login', views.login, name='login'),    
 )
