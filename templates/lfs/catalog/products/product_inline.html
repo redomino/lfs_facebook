@@ -3,35 +3,13 @@
 {% load lfs_tags %}
 {% load reviews_tags %}
 {% load lfs_theme_tags %}
-<input type="hidden" id="fbAppId" name="variable" value="{{ facebook_app_id }}">
-<input type="hidden" id="fbPage" name="variable" value="{{ facebook_page }}">
-<input type="hidden" id="userID" name="variable" value="{{ request.user.lfsfbuser.user_id }}">
-<script>
-    var FB_PAGE = document.getElementById("fbPage").value; 
-    var FB_APP_ID = document.getElementById("fbAppId").value;
-    var user_id = document.getElementById("userID").value;
+<script type="text/javascript">
+    var fbPage = "{{ facebook_page }}";
+    var fbAppId = "{{ facebook_app_id }}";
+    var user_id = "{{ request.user.lfsfbuser.facebook_id }}";
+    var fbReserved = "{{ fb_reserved }}";
 </script>
 
-<div id="fb-root"></div>
-<script src="http://connect.facebook.net/en_US/all.js"></script>
-<script>
-  FB.init({
-    appId  : '398437633619154',//FB_APP_ID,
-    status : true, 
-    cookie : true, 
-    xfbml  : true  
-  });
-</script>
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/it_IT/all.js#xfbml=1";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
 <div id="product-container" >
 <div id="product-inline" class="row">
 
@@ -249,7 +227,13 @@
                 <div class="form-group">
                     <button class="emphasized btn btn-info"
                         type="submit"
-                        name="add-to-cart" id="ciao">{% trans 'Add to cart' %}</button>
+                        name="add-to-cart" id="add-to-cart" disabled>{% trans 'Add to cart' %}</button>
+
+                    <p id="fb-like-text"></p>
+
+                    <div class="col-md-12 social">
+                        <div class="fb-like" id="fb-like" data-href="https://www.facebook.com/cocacola?fref=ts" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div>
+                    </div>
                 </div>
                 <div class="packing-result">
                     {{ packing_result }}
@@ -396,48 +380,3 @@
        </div>
 </div>
 
-{% block local_js  %}
-<script>
-
-var body = document.getElementsByTagName('BODY')[0];
-// CONDITION DOES NOT WORK
-if(body && body.readyState == 'loaded') {
-        HbkFunction();
-} else {
-// CODE BELOW WORKS
-    if (window.addEventListener) {  
-        window.addEventListener('load', HbkFunction, false);
-    } else {
-        window.attachEvent('onload', HbkFunction);
-    }
-}
-
-
-alert("pippo1");
-function HbkFunction(){
-
-    alert("pippo2");
-//    FB.login(function(response) {
-//        if (response.session) {
-     var fql_query = "SELECT uid FROM page_fan WHERE page_id = 40796308305 and uid = "+user_id;
-                alert(fql_query);
-     var the_query = FB.Data.query(fql_query);
-                alert("ciao2");
-     the_query.wait(function(rows) {
-                alert("ciao");
-                if (rows.length == 1 && rows[0].uid == user_id){
-                    $("#ciao").show();
-                   alert("pippo3");
-                } else {
-                    $("#ciao").hide();
-                    alert("pippo");
-                }
-            });
-     alert("fine");
-        }
-//        else {
-//        }
-//    })
-//}
-</script>
-{% endblock %}

@@ -1,42 +1,176 @@
-# lfs imports
-from lfs.caching.utils import lfs_get_object_or_404
-from lfs.catalog.models import Product
-from lfs.catalog.views import product_inline
-
 # django imports
-from django.http import Http404
 from django.conf import settings
-from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.template.loader import render_to_string
+from django.core.cache import cache
 
 #lfs_facebook import
 from facebook_settings import FACEBOOK_PAGE, FACEBOOK_APP_ID
+from lfs_facebook.decorators import permissions_required 
 
+# lfs imports
+from lfs.catalog.settings import SELECT
 from lfs.catalog import views
+from lfs.catalog.views import calculate_packing
+from lfs.catalog.models import ProductPropertyValue
+from lfs.catalog.settings import PROPERTY_VALUE_TYPE_DEFAULT
 
-def product_view(request, slug, template_name="lfs/catalog/product_base.html"):
-    """Main view to display a product.
+@permissions_required('product')
+def product_inline(request, product, template_name="lfs/catalog/products/product_inline.html"):
     """
-    product = lfs_get_object_or_404(Product, slug=slug)
-    import pdb; pdb.set_trace()
-    if (request.user.is_superuser or product.is_active()) == False:
-       raise Http404()
+    Part of the product view, which displays the actual data of the product.
 
-    # Store recent products for later use
-    recent = request.session.get("RECENT_PRODUCTS", [])
-    if slug in recent:
-        recent.remove(slug)
-    recent.insert(0, slug)
-    if len(recent) > settings.LFS_RECENT_PRODUCTS_LIMIT:
-        recent = recent[:settings.LFS_RECENT_PRODUCTS_LIMIT + 1]
-    request.session["RECENT_PRODUCTS"] = recent
+    This is factored out to be able to better cached and in might in future used
+    used to be updated via ajax requests.
+    """
+#    import pdb; pdb.set_trace()
+    cache_key = "%s-product-inline-%s-%s" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX, request.user.is_superuser, product.id)
+    result = cache.get(cache_key)
+    if result is not None:
+        return result
 
-    result = render_to_response(template_name, RequestContext(request, {
-        "product_inline": product_inline(request, product),
+    # Switching to default variant
+    if product.is_product_with_variants():
+        temp = product.get_default_variant()
+        product = temp if temp else product
+
+    properties = []
+    variants = []
+
+    display_variants_list = True
+    if product.is_variant():
+        parent = product.parent
+        if parent.variants_display_type == SELECT:
+            display_variants_list = False
+            # Get all properties (sorted). We need to traverse through all
+            # property/options to select the options of the current variant.
+            for property in parent.get_property_select_fields():
+                options = []
+                for property_option in property.options.all():
+                    if product.has_option(property, property_option):
+                        selected = True
+                    else:
+                        selected = False
+                    options.append({
+                        "id": property_option.id,
+                        "name": property_option.name,
+                        "selected": selected,
+                    })
+                properties.append({
+                    "id": property.id,
+                    "name": property.name,
+                    "title": property.title,
+                    "unit": property.unit,
+                    "options": options,
+                })
+        else:
+            properties = parent.get_property_select_fields()
+            variants = parent.get_variants()
+
+    elif product.is_configurable_product():
+        for property in product.get_configurable_properties():
+            options = []
+            try:
+                ppv = ProductPropertyValue.objects.get(product=product, property=property, type=PROPERTY_VALUE_TYPE_DEFAULT)
+                ppv_value = ppv.value
+            except ProductPropertyValue.DoesNotExist:
+                ppv = None
+                ppv_value = ""
+
+            for property_option in property.options.all():
+                if ppv_value == str(property_option.id):
+                    selected = True
+                else:
+                    selected = False
+
+                options.append({
+                    "id": property_option.id,
+                    "name": property_option.name,
+                    "price": property_option.price,
+                    "selected": selected,
+                })
+            properties.append({
+                "obj": property,
+                "id": property.id,
+                "name": property.name,
+                "title": property.title,
+                "unit": property.unit,
+                "display_price": property.display_price,
+                "options": options,
+                "value": ppv_value,
+            })
+
+    if product.get_template_name() != None:
+        template_name = product.get_template_name()
+
+    if product.get_active_packing_unit():
+        packing_result = calculate_packing(request, product.id, 1, True, True)
+    else:
+        packing_result = ""
+    # lfs utility 
+    fb_reserved = "false"
+    for p in product.get_properties():
+        if p.title == "Facebook Fan Reserved":
+            fb_reserved = "true"
+    # attachments
+    attachments = product.get_attachments()
+
+    result = render_to_string(template_name, RequestContext(request, {
         "product": product,
-        "facebook_page": FACEBOOK_PAGE,
+        "variants": variants,
+        "product_accessories": product.get_accessories(),
+        "properties": properties,
+        "packing_result": packing_result,
+        "attachments": attachments,
+        "quantity": product.get_clean_quantity(1),
+        "price_includes_tax": product.price_includes_tax(request),
+        "price_unit": product.get_price_unit(),
+        "unit": product.get_unit(),
+        "display_variants_list": display_variants_list,
+        "for_sale": product.get_for_sale(),
+        #lfs_facebook variables
         "facebook_app_id": FACEBOOK_APP_ID,
+        "facebook_page": FACEBOOK_PAGE,
+        "fb_reserved": fb_reserved,
     }))
+
+    cache.set(cache_key, result)
     return result
 
-views.product_view = product_view
+views.product_inline = product_inline
+
+from lfs.catalog.views import product_view
+original_product = product_view
+
+@permissions_required('product')
+def protected_product(request, slug, template_name="lfs/catalog/product_base.html"):
+    return original_product(request, slug, template_name="lfs/catalog/product_base.html")
+
+views.product_view  = protected_product
+
+from lfs.cart.views import add_to_cart
+original_add_to_cart = add_to_cart
+
+@permissions_required('add-to-cart')
+def protected_add_to_cart(request, product_id=None):
+    return original_add_to_cart(request, product_id=None)
+
+add_to_cart = protected_add_to_cart
+
+from lfs.catalog.views import category_view
+original_category_view = category_view
+
+@permissions_required('category')
+def protected_category_view(request, slug, template_name="lfs/catalog/category_base.html"):
+    return category_view(request, slug, template_name="lfs/catalog/category_base.html")
+
+category_view = protected_category_view
+
+from lfs.core.views import shop_view
+original_shop_view = shop_view
+
+@permissions_required('shop')
+def protected_shop_view(request, template_name="lfs/shop/shop.html"):
+    return shop_view(request, template_name="lfs/shop/shop.html")
+
+shop_view = protected_shop_view
