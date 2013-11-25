@@ -1,0 +1,44 @@
+{% load i18n lfs_tags %}
+<div class="useractions text-right">
+{% if user.is_authenticated %}
+    {% if user.first_name %}
+	    <span>{% trans 'Ciao' %} 
+            <a href="{% url lfs_my_account %}">
+                {{ user.first_name }} {{user.last_name}}
+            </a>
+        </span>
+    {% else %}
+	<span><a href="{% url lfs_my_account %}">{{ user.username }}</a></span>
+    {% endif %} |
+
+    {% if user.is_superuser %}
+	{% if category %}
+	    <a href="{% url lfs_manage_category category.id %}">{% trans 'Manage' %}</a>
+	{% endif %}
+	{% if product %}
+	    <a href="{% url lfs_manage_product product.id %}">{% trans 'Manage' %}</a>
+	{% endif %}
+	{% if page %}
+	    <a href="{% url lfs_manage_page page.id %}">{% trans 'Manage' %}</a>
+	{% endif %}
+	{% if not category and not product and not page %}
+	    <a href="{% url lfs_manage_dashboard %}">{% trans 'Manage' %}</a>
+	{% endif %}
+	|
+    {% endif %}
+    
+    
+    {% comment %}
+    <a href="{% url lfs_logout %}">{% trans 'Logout' %}</a> 
+    {% endcomment %}
+
+    {% comment %}
+    {% else %}
+    {% if not ANON_ONLY %}
+	<a href="{% url lfs_login %}">{% trans 'Login' %}</a>
+    {% endif %}
+    {% endcomment %}
+
+{% endif %}
+</div>
+
