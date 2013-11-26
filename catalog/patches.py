@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.core.cache import cache
 
 #lfs_facebook import
-from facebook_settings import FACEBOOK_PAGE, FACEBOOK_APP_ID
+from django.conf.settings import FACEBOOK_PAGE, FACEBOOK_APP_ID
 from lfs_facebook.decorators import permissions_required 
 
 # lfs imports

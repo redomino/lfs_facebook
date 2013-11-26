@@ -1,4 +1,4 @@
-from facebook_settings import VIEW_WITH_LOGIN_REQUIRED
+from django.conf.settings import VIEW_WITH_LOGIN_REQUIRED
 from django.contrib.auth.decorators import login_required
 
 def permissions_required(perm):
