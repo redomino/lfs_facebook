@@ -30,4 +30,4 @@ i campi in "LfsFbUser" del models.py di questo pacchetto e aggiungere ai setting
 * fornisce la possibilità di riservare un prodotto solo agli utenti a cui piace la propria facebook page.
 Per far questo deve essere aggiunta una proprietà lfs al prodotto che si vuole riservare. Va bene qualsiasi proprietà basta
 che abbia come titolo "Facebook Fan Reserved". Attraverso la patch della vista "product_inline" si controlla se il 
-prodotto è riservato
+prodotto è riservato e poi in lfs/catalog/product_base.html si decide o meno se permettere l'acquisto
