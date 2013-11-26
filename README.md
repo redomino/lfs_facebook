@@ -23,7 +23,7 @@ VIEW_WITH_LOGIN_REQUIRED = {
 * introduce un nuovo modello per lo user, in modo che per personalizzare le info per lo user  basterà modificare 
 i campi in "LfsFbUser" del models.py di questo pacchetto e aggiungere ai settings `AUTH_PROFILE_MODULE = 'lfs_facebook.LfsFbUser'`
 
-* fornisce una pagina di login (lfs_facebook/login.html)
+* fornisce una pagina di login (lfs_facebook/login.html) in modo da usare come backend quello di facebook 
 
 * è disabilitato il pulsante di login(lfs/user_actions.html), in quanto l'utente sarà rediretto alla pagina di login solo quando necessario, cioè se la vista ha "permission_required"
 
