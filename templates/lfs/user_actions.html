@@ -9,9 +9,10 @@
         </span>
     {% else %}
 	<span><a href="{% url lfs_my_account %}">{{ user.username }}</a></span>
-    {% endif %} |
+    {% endif %} 
 
     {% if user.is_superuser %}
+    |
 	{% if category %}
 	    <a href="{% url lfs_manage_category category.id %}">{% trans 'Manage' %}</a>
 	{% endif %}
@@ -24,11 +25,12 @@
 	{% if not category and not product and not page %}
 	    <a href="{% url lfs_manage_dashboard %}">{% trans 'Manage' %}</a>
 	{% endif %}
-	|
+    
     {% endif %}
     
     
     {% comment %}
+    |
     <a href="{% url lfs_logout %}">{% trans 'Logout' %}</a> 
     {% endcomment %}
 

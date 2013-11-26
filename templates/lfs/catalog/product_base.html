@@ -76,7 +76,6 @@
 
 {% block local_js %}
 <div id="fb-root"></div>
-<script src="http://connect.facebook.net/en_US/all.js"></script>
 <script>
 window.fbAsyncInit = function() {
     FB.init({
@@ -105,7 +104,7 @@ window.fbAsyncInit = function() {
             // the user's ID, a valid access token, a signed
             // request, and the time the access token 
             // and signed request each expire
-            testAPI();
+            checkFBLikes();
         } else if (response.status === 'not_authorized') {
             // the user is logged in to Facebook, 
             // but has not authenticated your app
@@ -125,9 +124,7 @@ window.fbAsyncInit = function() {
    ref.parentNode.insertBefore(js, ref);
   }(document));
 
-  // Here we run a very simple test of the Graph API after login is successful. 
-  // This testAPI() function is only called in those cases. 
-  function testAPI() {
+  function checkFBLikes() {
 
     var fql_query = "SELECT uid FROM page_fan WHERE page_id = "+fbPage+" and uid = "+user_id;
     
@@ -136,11 +133,9 @@ window.fbAsyncInit = function() {
         query: fql_query 
     },
     function(response){
-        console.log(response);
         FB.api('/me/permissions', function(response) {
-                  console.log(response);
         });
-        if(fbReserved === "true"){
+        if(fbReserved == "True"){
             if (response.length == 1 && response[0].uid == user_id){
                 $("#add-to-cart").prop('disabled', false);
                 $("#fb-like").hide();

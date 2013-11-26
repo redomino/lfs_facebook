@@ -13,6 +13,7 @@ from lfs.catalog import views
 from lfs.catalog.views import calculate_packing
 from lfs.catalog.models import ProductPropertyValue
 from lfs.catalog.settings import PROPERTY_VALUE_TYPE_DEFAULT
+from lfs.core import views as core_views
 
 @permissions_required('product')
 def product_inline(request, product, template_name="lfs/catalog/products/product_inline.html"):
@@ -22,7 +23,6 @@ def product_inline(request, product, template_name="lfs/catalog/products/product
     This is factored out to be able to better cached and in might in future used
     used to be updated via ajax requests.
     """
-#    import pdb; pdb.set_trace()
     cache_key = "%s-product-inline-%s-%s" % (settings.CACHE_MIDDLEWARE_KEY_PREFIX, request.user.is_superuser, product.id)
     result = cache.get(cache_key)
     if result is not None:
@@ -107,13 +107,12 @@ def product_inline(request, product, template_name="lfs/catalog/products/product
     else:
         packing_result = ""
     # lfs utility 
-    fb_reserved = "false"
+    fb_reserved = "False"
     for p in product.get_properties():
-        if p.title == "Facebook Fan Reserved":
-            fb_reserved = "true"
+        if p.title == settings.FACEBOOK_FAN_RESERVED_PROPERTY:
+            fb_reserved = "True"
     # attachments
     attachments = product.get_attachments()
-
     result = render_to_string(template_name, RequestContext(request, {
         "product": product,
         "variants": variants,
@@ -132,14 +131,12 @@ def product_inline(request, product, template_name="lfs/catalog/products/product
         "facebook_page": settings.FACEBOOK_PAGE,
         "fb_reserved": fb_reserved,
     }))
-
     cache.set(cache_key, result)
     return result
 
 views.product_inline = product_inline
 
-from lfs.catalog.views import product_view
-original_product = product_view
+original_product = views.product_view
 
 @permissions_required('product')
 def protected_product(request, slug, template_name="lfs/catalog/product_base.html"):
@@ -147,29 +144,26 @@ def protected_product(request, slug, template_name="lfs/catalog/product_base.htm
 
 views.product_view  = protected_product
 
-from lfs.cart.views import add_to_cart
-original_add_to_cart = add_to_cart
+original_add_to_cart = views.add_to_cart
 
 @permissions_required('add-to-cart')
 def protected_add_to_cart(request, product_id=None):
     return original_add_to_cart(request, product_id=None)
 
-add_to_cart = protected_add_to_cart
+views.add_to_cart = protected_add_to_cart
 
-from lfs.catalog.views import category_view
-original_category_view = category_view
+original_category_view = views.category_view
 
 @permissions_required('category')
 def protected_category_view(request, slug, template_name="lfs/catalog/category_base.html"):
-    return category_view(request, slug, template_name="lfs/catalog/category_base.html")
+    return original_category_view(request, slug, template_name="lfs/catalog/category_base.html")
 
-category_view = protected_category_view
+views.category_view = protected_category_view
 
-from lfs.core.views import shop_view
-original_shop_view = shop_view
+original_shop_view = core_views.shop_view
 
 @permissions_required('shop')
 def protected_shop_view(request, template_name="lfs/shop/shop.html"):
-    return shop_view(request, template_name="lfs/shop/shop.html")
+    return original_shop_view(request, template_name="lfs/shop/shop.html")
 
-shop_view = protected_shop_view
+core_views.shop_view = protected_shop_view
