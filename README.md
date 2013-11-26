@@ -5,9 +5,10 @@ It is a package for lfs e-commerce.....
 Features
 =============
 * Protegge alcune viste con un decoratore "permissions_required" (definito in decorators.py) che si basa sul "login_required". 
-Nel dettaglio "permissions_required" cicla su una lista di variabili booleane, che rappresentano una vista, 
+Nel dettaglio "permissions_required" cicla su un dizionario di variabili booleane, che rappresentano una vista, 
 e se la variabile relativa alla vista protetta da decoratore è settata a True, chiama login_required.
-Le variabili rappresentanti le viste devono essere raggrupate in VIEW_WITH_LOGIN_REQUIRED nel file di settings. 
+Le variabili rappresentanti le viste devono essere raggrupate in un dizionario chiamato VIEW_WITH_LOGIN_REQUIRED 
+dichiarato nel file di settings. 
 Example:
 ```
 VIEW_WITH_LOGIN_REQUIRED = {
