@@ -144,11 +144,11 @@ window.fbAsyncInit = function() {
             if (response.length == 1 && response[0].uid == user_id){
                 $("#add-to-cart").prop('disabled', false);
                 $("#fb-like").hide();
-                document.getElementById("fb-like-text").innerHTML="Ti piace la nostra facebook page!!";
+                document.getElementById("fb-like-text").innerHTML="Product available to fans.<p>You like our Facebook page!</p>";
             } else {
                 $("#add-to-cart").prop('disabled', true);
                 $("#fb-like").show();
-                document.getElementById("fb-like-text").innerHTML="Ricordati di mettere mi piace alla nostra facebook page.";
+                document.getElementById("fb-like-text").innerHTML="Product available to fans.<p>Like our Facebook page.</p>";
             }
         }else{
             $("#add-to-cart").prop('disabled', false);
