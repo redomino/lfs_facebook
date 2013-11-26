@@ -4,7 +4,6 @@
 {% if not user.is_authenticated %}
 
 {% include 'django_facebook/_facebook_js.html' %}
-<div>
 <form action="{% url 'facebook_connect' %}?facebook_login=1" method="post" id="facebook_form">
     <a href="javascript:void(0);" style="font-size: 20px;" onclick="F.connect(this.parentNode, ['email', 'user_about_me', 'user_birthday', 'user_website',  'user_likes']);"></a>
     <input type="hidden" value="{{ my_next }}" name="next" />
@@ -35,10 +34,11 @@ facebookClass.prototype.connectLoading = function(message, closeable, hideLoadin
         if (!facebookMessage) {
             var container = document.createElement('div');
             container.id = 'facebook_container';
-            var html = '<div id="facebook_shade"></div>\
-                <div id="facebook_wrapper">\
+            container.setAttribute("style","text-align:center;");
+            var html = '<div id="facebook_shade" ></div>\
+               <div id="facebook_wrapper">\
                     <div id="facebook_lightbox" >\
-                        <div id="facebook_message" style="text-align:center"/>{{ message }}</div>\
+                        <div id="facebook_message">{{ message }}</div>\
                         <img id="facebook_loading" src="' + staticUrl + 'django_facebook/images/facebook_loading.gif" alt="..."/>\
                         <div id="facebook_close" style="display: none" onclick="document.getElementById(\'facebook_container\').style.display=\'none\';"></div>\
                     </div>\
@@ -49,6 +49,7 @@ facebookClass.prototype.connectLoading = function(message, closeable, hideLoadin
             facebookMessage = document.getElementById('facebook_message');
             facebookContainer = document.getElementById('facebook_container');
         }
+
         facebookMessage.innerHTML = message;
         facebookContainer.style.display = message ? 'block' : 'none';
         document.getElementById('facebook_close').style.display = closeable ? 'block' : 'none';
