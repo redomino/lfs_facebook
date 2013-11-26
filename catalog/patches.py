@@ -5,7 +5,6 @@ from django.template.loader import render_to_string
 from django.core.cache import cache
 
 #lfs_facebook import
-from django.conf.settings import FACEBOOK_PAGE, FACEBOOK_APP_ID
 from lfs_facebook.decorators import permissions_required 
 
 # lfs imports
@@ -129,8 +128,8 @@ def product_inline(request, product, template_name="lfs/catalog/products/product
         "display_variants_list": display_variants_list,
         "for_sale": product.get_for_sale(),
         #lfs_facebook variables
-        "facebook_app_id": FACEBOOK_APP_ID,
-        "facebook_page": FACEBOOK_PAGE,
+        "facebook_app_id": settings.FACEBOOK_APP_ID,
+        "facebook_page": settings.FACEBOOK_PAGE,
         "fb_reserved": fb_reserved,
     }))
 

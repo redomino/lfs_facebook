@@ -1,4 +1,4 @@
-from django.conf.settings import VIEW_WITH_LOGIN_REQUIRED
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
 def permissions_required(perm):
@@ -8,7 +8,7 @@ def permissions_required(perm):
     in facebook_settings
     """
     def decorator(func):
-        if VIEW_WITH_LOGIN_REQUIRED[perm]:
+        if settings.VIEW_WITH_LOGIN_REQUIRED[perm]:
             return login_required(func)
         else:
             return func
