@@ -1,0 +1,141 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-11-28 14:59+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: templates/lfs/user_actions.html:5
+msgid "Ciao"
+msgstr ""
+
+#: templates/lfs/user_actions.html:17 templates/lfs/user_actions.html.py:20
+#: templates/lfs/user_actions.html:23 templates/lfs/user_actions.html.py:26
+msgid "Manage"
+msgstr "Gestione"
+
+#: templates/lfs/catalog/product_base.html:52
+msgid "Tags"
+msgstr "Tags"
+
+#: templates/lfs/catalog/product_base.html:63
+msgid "Tag cloud"
+msgstr "Tag cloud"
+
+#: templates/lfs/catalog/products/product_inline.html:154
+#: templates/lfs/catalog/products/product_inline.html:278
+msgid "Variants"
+msgstr "Varianti"
+
+#: templates/lfs/catalog/products/product_inline.html:217
+#: templates/lfs/catalog/products/product_inline.html:331
+msgid "Quantity"
+msgstr "Quantita"
+
+#: templates/lfs/catalog/products/product_inline.html:230
+msgid "Add to cart"
+msgstr "Aggiungi al carrello"
+
+#: templates/lfs/catalog/products/product_inline.html:234
+#: templates/lfs/catalog/products/product_inline.html:233
+msgid "Product available to fans"
+msgstr "Prodotto riservato ai nostri fans"
+
+#: templates/lfs/catalog/products/product_inline.html:233
+msgid "You like our Facebook page!"
+msgstr "Ti piace la nostra pagina Facebook"
+
+#: templates/lfs/catalog/products/product_inline.html:234
+msgid "Like our Facebook page"
+msgstr "Metti mi piace alla nostra pagina Facebook"
+
+#: templates/lfs/catalog/products/product_inline.html:247
+msgid "Send request"
+msgstr "Manda richiesta"
+
+#: templates/lfs/catalog/products/product_inline.html:275
+msgid "Description"
+msgstr "Descrizione"
+
+#: templates/lfs/catalog/products/product_inline.html:282
+msgid "Attachments"
+msgstr ""
+
+#: templates/lfs/catalog/products/product_inline.html:286
+msgid "Accessories"
+msgstr "Accessori"
+
+#: templates/lfs/catalog/products/product_inline.html:291
+msgid "Reviews"
+msgstr "Recensioni"
+
+#: templates/lfs/catalog/products/product_inline.html:330
+msgid "Name"
+msgstr "Nome"
+
+#: templates/lfs/catalog/products/product_inline.html:332
+msgid "Price"
+msgstr "Prezzo"
+
+#: templates/lfs/catalog/products/product_inline.html:333
+msgid "Total"
+msgstr "Totale"
+
+#: templates/lfs/catalog/products/product_inline.html:334
+msgid "Add"
+msgstr "Aggiungi"
+
+#: templates/lfs/checkout/login.html:6 templates/lfs/checkout/login.html:12
+#: templates/lfs/checkout/login.html:60
+#: templates/lfs/checkout/login_old.html:6
+#: templates/lfs/checkout/login_old.html:12
+msgid "Login"
+msgstr "Accedi"
+
+#: templates/lfs/checkout/login.html:20
+msgid "Please select!"
+msgstr ""
+
+#: templates/lfs/checkout/login.html:63
+msgid ""
+"Login in order to store your address data and to follow the state of your "
+"orders."
+msgstr ""
+"Accedi così da salvare i tuoi dati perla spedizione e seguire lo stato dei "
+"tuoi ordini."
+
+#: templates/lfs/checkout/login.html:68
+msgid "Facebook Login"
+msgstr ""
+
+#: templates/lfs/checkout/login.html:101 templates/lfs/checkout/login.html:111
+msgid "Checkout"
+msgstr ""
+
+#: templates/lfs/checkout/login.html:104
+msgid "You can also checkout without login or registration."
+msgstr ""
+
+#: templates/lfs/checkout/login2.html:35 templates/lfs_facebook/login.html:20
+msgid "Welcome"
+msgstr "Benvenuti !"
+
+#: templates/lfs/checkout/login2.html:36 templates/lfs_facebook/login.html:21
+msgid "Are you now logged in!"
+msgstr "Connesso!"
+
+#~ msgid "Log in with Facebook"
+#~ msgstr "Accedi con Facebook"
