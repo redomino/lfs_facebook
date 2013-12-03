@@ -98,7 +98,7 @@ window.fbAsyncInit = function() {
   });
 */
     FB.getLoginStatus(function(response) {
-        if (response.status === 'connected' && response.status === 'authorized') {
+        if (response.status === 'connected') {
             // the user is logged in and has authenticated your
             // app, and response.authResponse supplies
             // the user's ID, a valid access token, a signed
@@ -106,7 +106,6 @@ window.fbAsyncInit = function() {
             // and signed request each expire
 
             //ATTENTION: user could be anonymous also
-
             checkFBLikes();
         } else {
             // the user isn't logged in to Facebook.
@@ -127,7 +126,6 @@ window.fbAsyncInit = function() {
 
   function checkFBLikes() {
 
-        alert("connected");
     var fql_query = "SELECT uid FROM page_fan WHERE page_id = "+fbPage+" and uid = "+user_id;
     
     $(document).ready(FB.api({
