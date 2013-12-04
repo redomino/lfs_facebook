@@ -228,16 +228,17 @@
                     <button class="emphasized btn btn-info"
                         type="submit"
                         name="add-to-cart" id="add-to-cart" disabled>{% trans 'Add to cart' %}</button>
+               </div>
 
-                    <div id="fb-like-text">
-                        <p id="fb-already-like" style="display: none">{% trans 'Prduct available to fans' %}</br>{% trans 'You like our Facebook page!' %}</p>
-                        <p id="fb-no-like" style="display: none">{% trans 'Product available to fans' %}</br>{% trans 'Like our Facebook page' %}</p>
-                    </div>
+               <div id="fb-like-text">
+                    <p id="fb-already-like" style="display: none">{% trans 'Product available to fans' %}</br>{% trans 'You like our Facebook page!' %}</p>
+                    <p id="fb-no-like" style="display: none">{% trans 'Product available to fans' %}</br>{% trans 'Like our Facebook page' %}</p>
+               </div>
 
-                    <div class="col-md-12 social">
-                        <div class="fb-like" id="fb-like" data-href="https://www.facebook.com/{{ facebook_page }}" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"></div>
-                    </div>
-                </div>
+               <div class="col-md-12 social">
+                    <div class="fb-like" id="fb-like" data-href="https://www.facebook.com/{{ facebook_page }}" data-layout="standard" data-action="like" data-show-faces="false" data-share="false"i data-width="260"></div>
+               </div>
+ 
                 <div class="packing-result">
                     {{ packing_result }}
                 </div>

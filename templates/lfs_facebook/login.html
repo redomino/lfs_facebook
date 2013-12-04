@@ -6,13 +6,13 @@
 
 {% include 'django_facebook/_facebook_js.html' %}
 <form action="{% url 'facebook_connect' %}?facebook_login=1" method="post" id="facebook_form">
-    <a href="javascript:void(0);" style="font-size: 20px;" onclick="F.connect(this.parentNode, ['email', 'user_about_me', 'user_birthday', 'user_website',  'user_likes']);"></a>
+    <a href="javascript:void(0);" style="font-size: 20px;"></a>
     <input type="hidden" value="{{ next }}" name="next" />
     <input type="hidden" value="{{ request.path }}" name="register_next" />
     <input type="hidden" value="{{ request.path }}" name="error_next" />
     {% csrf_token %}
 </form>
-</br>
+<br/>
 
 {% endif %}
 
@@ -65,12 +65,11 @@ facebookClass.prototype.connectLoading = function(message, closeable, hideLoadin
 <script>
 var myVar = setInterval(function(){
     if(F !== undefined){
-        F.connect(document.getElementById('facebook_form'));
+//        F.connect(document.getElementById('facebook_form'));
+	F.connect(document.getElementById('facebook_form'), ['email', 'user_about_me', 'user_birthday', 'user_website',  'user_likes']);
         clearInterval(myVar);
     }
     }, 500);
-
-
 </script>
 
 {% endblock  %}

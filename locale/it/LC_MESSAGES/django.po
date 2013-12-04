@@ -114,7 +114,7 @@ msgid ""
 "Login in order to store your address data and to follow the state of your "
 "orders."
 msgstr ""
-"Accedi così da salvare i tuoi dati perla spedizione e seguire lo stato dei "
+"Accedi così da salvare i tuoi dati pe la spedizione e seguire lo stato dei "
 "tuoi ordini."
 
 #: templates/lfs/checkout/login.html:68
