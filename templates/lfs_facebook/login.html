@@ -25,6 +25,7 @@
 {% endblock %}
 
 {% block local_js  %}
+
 <script>
 facebookClass.prototype.connectLoading = function(message, closeable, hideLoading){
         /*
@@ -35,7 +36,6 @@ facebookClass.prototype.connectLoading = function(message, closeable, hideLoadin
         if (!facebookMessage) {
             var container = document.createElement('div');
             container.id = 'facebook_container';
-            container.setAttribute("style","text-align:center;");
             var html = '<div id="facebook_shade" ></div>\
                <div id="facebook_wrapper">\
                     <div id="facebook_lightbox" >\
@@ -65,7 +65,6 @@ facebookClass.prototype.connectLoading = function(message, closeable, hideLoadin
 <script>
 var myVar = setInterval(function(){
     if(F !== undefined){
-//        F.connect(document.getElementById('facebook_form'));
 	F.connect(document.getElementById('facebook_form'), ['email', 'user_about_me', 'user_birthday', 'user_website',  'user_likes']);
         clearInterval(myVar);
     }

@@ -64,7 +64,7 @@
             {% include 'django_facebook/_facebook_js.html' %}
             <form action="{% url 'facebook_connect' %}?facebook_login=1" method="post" id="facebook_form"> 
                 {% csrf_token %}
-                <a class="facebook_button" href="javascript:void(0);" onclick="F.connect(this.parentNode, ['email', 'user_about_me', 'user_birthday', 'user_website',  'user_likes']);">{%trans 'Facebook Login' %}</a>
+                <a class="btn facebook_button" href="javascript:void(0);" onclick="F.connect(this.parentNode, ['email', 'user_about_me', 'user_birthday', 'user_website',  'user_likes']);">{%trans 'Facebook Login' %}</a>
                 <input type="hidden" value="{{ request.path }}" name="next" />
                 <input type="hidden" value="{{ request.path }}" name="register_next" />
                 <input type="hidden" value="{{ request.path }}" name="error_next" />
@@ -137,7 +137,7 @@ facebookClass.prototype.connectLoading = function(message, closeable, hideLoadin
             var html = '<div id="facebook_shade" ></div>\
                <div id="facebook_wrapper">\
                     <div id="facebook_lightbox" >\
-                        <div id="facebook_message"></div>\
+                        <div id="facebook_message">{{ message }}</div>\
                         <img id="facebook_loading" src="' + staticUrl + 'django_facebook/images/facebook_loading.gif" alt="..."/>\
                         <div id="facebook_close" style="display: none" onclick="document.getElementById(\'facebook_container\').style.display=\'none\';"></div>\
                     </div>\
