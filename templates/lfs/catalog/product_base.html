@@ -150,7 +150,6 @@ window.fbAsyncInit = function() {
         }else{
             //product available for all
             $("#add-to-cart").prop('disabled', false);
-            $("#fb-like").hide();
 
             $("#fb-no-like").hide();
             $("#fb-already-like").hide();
@@ -161,13 +160,11 @@ window.fbAsyncInit = function() {
   function allowPurchase(allow){
     if(allow){   
         $("#add-to-cart").prop('disabled', false);
-        $("#fb-like").hide();
              
         $("#fb-no-like").hide();
         $("#fb-already-like").show(); 
     } else {
         $("#add-to-cart").prop('disabled', true);
-        $("#fb-like").show();
 
         $("#fb-no-like").show();
         $("#fb-already-like").hide();
@@ -182,7 +179,6 @@ window.fbAsyncInit = function() {
         allowPurchase(false);
     } else {
         $("#add-to-cart").prop('disabled', false);
-        $("#fb-like").hide();
 
         $("#fb-no-like").hide();
         $("#fb-already-like").hide();
